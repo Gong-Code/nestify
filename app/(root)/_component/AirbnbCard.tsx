@@ -1,4 +1,4 @@
-import { AccessibilityIcons } from "@/app/components/AccessibilityIcons";
+import { AccessibilityIconsLandingPage } from "@/app/components/AccessibilityIcons";
 import { Airbnb } from "@/app/types/airbnb";
 import { useRouter } from "next/navigation";
 import React from "react";
@@ -8,16 +8,6 @@ type AirbnbCardProps = {
 };
 
 export const AirbnbCard = ({ airbnb }: AirbnbCardProps) => {
-  const accessibility: { [key in keyof Airbnb["accessibility"]]: JSX.Element } =
-    {
-      nearWater: AccessibilityIcons.Waves,
-      closeToNature: AccessibilityIcons.TreePine,
-      wheelChairAccessible: AccessibilityIcons.Accessibility,
-      petFriendly: AccessibilityIcons.PawPrint,
-      spacious: AccessibilityIcons.House,
-      apartment: AccessibilityIcons.Building,
-    };
-
   const router = useRouter();
 
   const handleCardClick = () => {
@@ -39,17 +29,8 @@ export const AirbnbCard = ({ airbnb }: AirbnbCardProps) => {
       />
       <div className="p-4">
         <h3 className="text-lg font-bold">{airbnb.title}</h3>
-        <div className="flex space-x-2 mt-2">
-          {Object.keys(accessibility).map(
-            (feature: keyof typeof accessibility) =>
-              airbnb.accessibility[feature] && (
-                <div key={feature}>
-                  {accessibility[feature] || (
-                    <span className="text-blue-500">No Icon Found</span>
-                  )}
-                </div>
-              )
-          )}
+        <div className="flex flex-wrap gap-2 mt-2">
+          <AccessibilityIconsLandingPage accessibility={airbnb.accessibility} />
         </div>
       </div>
     </div>

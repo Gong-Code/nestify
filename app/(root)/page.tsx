@@ -10,10 +10,12 @@ import { LandingPageSearch } from "../components/SearchInputs";
 import { FilterList } from "../components/FilterList";
 import Image from "next/image";
 import { CircleUserRound } from "lucide-react";
+import { Loader } from "../helpers/Loader";
 
 const LandingPage = () => {
   const [airbnbs, setAirbnbs] = useState<Airbnb[]>([]);
   const [searchValue, setSearchValue] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const landingPageImage = "/assets/images/landingPageImg.jpg";
 
@@ -34,6 +36,10 @@ const LandingPage = () => {
   const handleSearchInput = (event: React.ChangeEvent<HTMLInputElement>) => {
     setSearchValue(event.target.value);
   };
+
+  if (loading) {
+    return <Loader />;
+  }
 
   return (
     <>
@@ -76,7 +82,7 @@ const LandingPage = () => {
             <p className="hidden md:block pb-6">
               Take a look at our most popular accommodations!
             </p>
-            <AirbnbList />
+            <AirbnbList airbnbs={airbnbs} />
           </div>
         </div>
       </div>

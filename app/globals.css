@@ -85,9 +85,22 @@ p.title {
     font-size: 20pt;
 }
 
-
 .filterTitle{
   size: .6875rem;
+}
+
+.loader {
+    border: .5rem solid #f3f3f3; 
+    border-top: .5rem solid #3498db; 
+    border-radius: 50%;
+    width: 3.75rem;
+    height: 3.75rem;
+    animation: spin 2s linear infinite;
+}
+  
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
 }
 
 @media (min-width: 768px) {
@@ -109,3 +122,52 @@ p.title {
   }
 }
 
+.carousel {
+    position: relative;
+  }
+  
+  .embla {
+    overflow: hidden;
+  }
+  
+  .embla__container {
+    display: flex;
+  }
+  
+  .embla__slide {
+    position: relative;
+    min-width: 100%;
+    padding: 10px;
+  }
+  
+  .embla__slide__img {
+    display: block;
+    width: 100%;
+    height: auto;
+    border-radius: 10px;
+  }
+  
+  .carousel-buttons {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 10px;
+  }
+  
+  .carousel-button {
+    background-color: #3498db;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: background-color 0.3s;
+  }
+  
+  .carousel-button:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+  }
+  
+  .carousel-button:not(:disabled):hover {
+    background-color: #2980b9;
+  }

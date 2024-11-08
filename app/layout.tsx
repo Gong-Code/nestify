@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import AuthContextProvider from "./providers/authProvider";
+import { BookingProvider } from "./contexts/BookingContext";
 
 export const metadata: Metadata = {
   title: "Airbnb App",
@@ -13,9 +14,11 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
       <body>
-        <AuthContextProvider>{children}</AuthContextProvider>
+        <AuthContextProvider>
+          <BookingProvider>{children}</BookingProvider>
+        </AuthContextProvider>
       </body>
     </html>
   );
