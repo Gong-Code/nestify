@@ -1,5 +1,6 @@
 import { fetchAirbnbById } from "@/app/lib/airbnb.db";
 import { AirbnbCardDetails } from "./_component/AirbnbCardDetails";
+import { Footer } from "@/app/(root)/_component/Footer";
 
 type DetailsPageProps = {
   params: { id: string };
