@@ -1,7 +1,7 @@
 "use client";
 
 import { useAuth } from "@/app/providers/authProvider";
-import { loginSchema } from "@/app/validation/loginSchema";
+import { loginSchema } from "@/app/schema/loginSchema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
