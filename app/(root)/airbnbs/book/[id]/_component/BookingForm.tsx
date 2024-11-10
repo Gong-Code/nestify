@@ -12,16 +12,12 @@ type BookingFormProps = {
   airbnbId: string;
   pricePerNight: number;
   maxGuests: number;
-  title: string;
-  images: string[];
 };
 
 export const BookingForm = ({
   airbnbId,
   pricePerNight,
   maxGuests,
-  title,
-  images,
 }: BookingFormProps) => {
   const { checkIn, setCheckIn, checkOut, setCheckOut, guests, setGuests } =
     useBooking();
@@ -50,7 +46,6 @@ export const BookingForm = ({
       try {
         const airbnbDetails = await fetchAirbnbById(airbnbId);
         setAirbnb(airbnbDetails);
-        console.log("Airbnb details:", airbnbDetails);
       } catch (error) {
         console.error("Failed to fetch Airbnb details:", error);
       }
