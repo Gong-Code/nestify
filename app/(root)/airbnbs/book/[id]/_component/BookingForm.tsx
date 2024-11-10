@@ -77,7 +77,7 @@ export const BookingForm = ({
     const checkInDate = new Date(checkIn);
     const checkOutDate = new Date(checkOut);
     const today = new Date();
-    today.setHours(0, 0, 0, 0); // Set time to midnight to compare only dates
+    today.setHours(0, 0, 0, 0);
 
     if (checkInDate < today || checkOutDate < today) {
       alert("You cannot book past dates.");
