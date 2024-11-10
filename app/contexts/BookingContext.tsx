@@ -1,8 +1,10 @@
 "use client";
 
 import React, { createContext, useContext, useState, ReactNode } from "react";
-import { Booking } from "../types/airbnb";
-import { bookAirbnb } from "../lib/book.db";
+
+import { Airbnb, Booking } from "../types/airbnb"; // Adjust the import path as necessary
+import { bookAirbnb } from "../lib/booking.db";
+import { fetchAirbnbById } from "../lib/airbnb.db";
 
 type BookingContextType = {
   checkIn: string;
@@ -15,7 +17,7 @@ type BookingContextType = {
     airbnbId: string,
     userId: string,
     pricePerNight: number
-  ) => Promise<void>;
+  ) => Promise<string>;
 };
 
 const BookingContext = createContext<BookingContextType | undefined>(undefined);
@@ -29,7 +31,7 @@ export const BookingProvider = ({ children }: { children: ReactNode }) => {
     airbnbId: string,
     userId: string,
     pricePerNight: number
-  ) => {
+  ): Promise<string> => {
     const checkInDate = new Date(checkIn);
     const checkOutDate = new Date(checkOut);
     const nights =
@@ -48,13 +50,12 @@ export const BookingProvider = ({ children }: { children: ReactNode }) => {
     };
 
     try {
-      await bookAirbnb(newBooking);
-      console.log(
-        `Reservation made for ${guests} guests from ${checkIn} to ${checkOut}. Total amount: ${totalAmount} SEK`
-      );
+      const bookingId = await bookAirbnb(newBooking);
+      console.log("Booking successfully added!", newBooking);
+      return bookingId;
     } catch (error) {
       console.error("Error making reservation:", error);
-      alert("Failed to make reservation. Please try again.");
+      throw error;
     }
   };
 

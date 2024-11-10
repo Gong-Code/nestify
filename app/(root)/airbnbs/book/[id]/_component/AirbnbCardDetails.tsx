@@ -12,13 +12,9 @@ import { AccessibilityIcons } from "@/app/components/AccessibilityIcons"; // Adj
 
 type AirbnbCardDetailsProps = {
   airbnb: Airbnb;
-  userId: string;
 };
 
-export const AirbnbCardDetails = ({
-  airbnb,
-  userId,
-}: AirbnbCardDetailsProps) => {
+export const AirbnbCardDetails = ({ airbnb }: AirbnbCardDetailsProps) => {
   const imageSlides = airbnb.images.map((image, index) => ({
     src: image,
     alt: `${airbnb.title} - Slide ${index + 1}`,
@@ -60,8 +56,8 @@ export const AirbnbCardDetails = ({
         </div>
         <BookingForm
           airbnbId={airbnb.airbnbId}
-          userId={userId}
           pricePerNight={airbnb.pricePerNight}
+          maxGuests={airbnb.guests}
         />
       </section>
       <header className="hidden md:block">
@@ -123,8 +119,8 @@ export const AirbnbCardDetails = ({
           <div className="hidden md:block w-full md:w-fit">
             <BookingForm
               airbnbId={airbnb.airbnbId}
-              userId={userId}
               pricePerNight={airbnb.pricePerNight}
+              maxGuests={airbnb.guests}
             />
           </div>
         </section>
