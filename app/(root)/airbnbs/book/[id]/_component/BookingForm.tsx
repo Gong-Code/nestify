@@ -5,6 +5,7 @@ import { fetchAirbnbById } from "@/app/lib/airbnb.db";
 
 import { useAuth } from "@/app/providers/authProvider";
 import { Airbnb } from "@/app/types/airbnb";
+import { validateBooking } from "@/app/validation/validateBooking";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
@@ -58,40 +59,12 @@ export const BookingForm = ({
     event.preventDefault();
 
     if (!user) {
-      alert("Please log in to make a reservation.");
-      console.log("Please log in to make a reservation.");
+      router.push("/log-in");
       return;
     }
 
-    if (!checkIn || !checkOut) {
-      alert("Please select both check-in and check-out dates.");
-      console.log("Please select both check-in and check-out dates.");
+    if (!validateBooking(checkIn, checkOut, guests, maxGuests, setGuestError)) {
       return;
-    }
-
-    const checkInDate = new Date(checkIn);
-    const checkOutDate = new Date(checkOut);
-    const today = new Date();
-    today.setHours(0, 0, 0, 0);
-
-    if (checkInDate < today || checkOutDate < today) {
-      alert("You cannot book past dates.");
-      console.log("You cannot book past dates.");
-      return;
-    }
-
-    if (checkInDate >= checkOutDate) {
-      alert("Check-out date must be after check-in date.");
-      console.log("Check-out date must be after check-in date.");
-      return;
-    }
-
-    if (guests > maxGuests) {
-      setGuestError(`Cannot exceed max guest spot of ${maxGuests}.`);
-      console.log(`Cannot exceed max guest spot of ${maxGuests}.`);
-      return;
-    } else {
-      setGuestError("");
     }
 
     const params = new URLSearchParams({
