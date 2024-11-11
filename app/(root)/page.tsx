@@ -54,7 +54,7 @@ const LandingPage = () => {
               <h2 className="hidden md:block mb-9">Where do you want to go?</h2>
               <div className="flex items-center gap-3">
                 <LandingPageSearch
-                  placeholder="Search.."
+                  placeholder="Search..."
                   onChange={handleSearchInput}
                   value={searchValue}
                 />

@@ -12,11 +12,7 @@ const DetailsPage = async ({ params }: DetailsPageProps) => {
     return <div>Airbnb not found</div>;
   }
 
-  return (
-    <div>
-      <AirbnbCardDetails airbnb={airbnb} />
-    </div>
-  );
+  return <AirbnbCardDetails airbnb={airbnb} />;
 };
 
 export default DetailsPage;

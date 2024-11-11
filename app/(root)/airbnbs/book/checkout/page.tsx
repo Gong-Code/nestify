@@ -1,8 +1,11 @@
 "use client";
 
+import { Footer } from "@/app/(root)/_component/Footer";
+import { Navbar } from "@/app/(root)/_component/Navbar";
+import { Loader } from "@/app/helpers/Loader";
+import { Pencil } from "lucide-react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
-import Image from "next/image";
 
 const CheckoutPage = () => {
   const router = useRouter();
@@ -70,29 +73,59 @@ const CheckoutPage = () => {
     fetchBookingDetails();
   }, [searchParams]);
 
+  if (loading) {
+    return <Loader />;
+  }
+
   return (
-    <div>
-      {loading ? (
-        <p>Loading...</p>
-      ) : (
-        <div>
-          <h1>Booking Details</h1>
-          <p>Airbnb ID: {bookingDetails.airbnbId}</p>
-          <p>User ID: {bookingDetails.userId}</p>
-          <p>Check-In: {bookingDetails.checkIn}</p>
-          <p>Check-Out: {bookingDetails.checkOut}</p>
-          <p>Guests: {bookingDetails.guests}</p>
-          <p>Total Amount: {bookingDetails.totalAmount}</p>
-          <p>Title: {bookingDetails.title}</p>
-          <Image
-            src={bookingDetails.images}
-            alt="Airbnb Image"
-            width={500}
-            height={300}
-          />
+    <>
+      <header className="hidden md:block">
+        <Navbar />
+      </header>
+      <div className="flex items-center justify-center min-h-screen bg-[--color-background] overflow-hidden">
+        <div className="bg-[--color-background] p-8 rounded-lg w-full max-w-4xl">
+          <h2 className="text-3xl font-bold mb-6">Your trip</h2>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+            <div>
+              <img
+                src={bookingDetails.images}
+                alt="Luxurious cabin on lake"
+                className="rounded-lg w-full"
+              />
+            </div>
+
+            <div>
+              <div className="flex justify-between items-center mb-4">
+                <h3 className="text-xl font-bold">{bookingDetails.title}</h3>
+                <button className="bg-[--color-secondary] hover:bg-[--color-secondary-hover] text-[--color-text-secondary] font-bold py-2 px-4 rounded-xl shadow-md md:shadow-none flex items-center">
+                  <Pencil className="mr-2" size={16} />
+                  Edit
+                </button>
+              </div>
+              <p className="text-[--color-text-primary] font-bold text-lg md:text-base">
+                Price per night: {bookingDetails.totalAmount} SEK
+              </p>
+              <p className="text-[--color-text-primary] font-bold text-lg md:text-base">
+                Selected dates: {bookingDetails.checkIn} -{" "}
+                {bookingDetails.checkOut}
+              </p>
+              <p className="text-[--color-text-primary] font-bold mb-20 text-lg md:text-base">
+                Number of guests: {bookingDetails.guests}
+              </p>
+              <p className="text-[--color-text-primary] font-bold text-lg md:text-base">
+                Total: {bookingDetails.totalAmount} SEK
+              </p>
+            </div>
+          </div>
+
+          <button className="bg-[--color-primary] hover:bg-[--color-primary-hover] text-[--color-text-secondary] font-bold py-2 px-4 rounded-md mt-4 w-full">
+            Request to book
+          </button>
         </div>
-      )}
-    </div>
+      </div>
+      <Footer />
+    </>
   );
 };
 
