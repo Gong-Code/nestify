@@ -72,7 +72,9 @@ const LandingPage = () => {
           <div className="flex justify-center items-start text-left md:w-1/3">
             <div className="py-6">
               <h1 className="hidden md:block mb-2">Rent your dream home</h1>
-              <h2 className="hidden md:block mb-9">Where do you want to go?</h2>
+              <h2 className="hidden md:block mb-9 font-bold">
+                Where do you want to go?
+              </h2>
               <div className="flex items-center gap-3">
                 <LandingPageSearch
                   placeholder="Search..."
@@ -103,15 +105,11 @@ const LandingPage = () => {
         </div>
         <div className="flex justify-center">
           <div className="overflow-x-hidden px-4 md:px-12 mx-auto">
-            <p className="title pb-2 pt-6">Featured</p>
+            <p className=" pb-2 pt-6 text-3xl font-bold">Featured</p>
             <p className="hidden md:block pb-6">
               Take a look at our most popular accommodations!
             </p>
-            <AirbnbList
-              airbnbs={searchFilteredAirbnbs}
-              selectedFilters={selectedFilters}
-              searchValue={searchValue}
-            />
+            <AirbnbList airbnbs={searchFilteredAirbnbs} />
           </div>
         </div>
       </div>
