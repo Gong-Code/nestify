@@ -1,4 +1,4 @@
-import React from "react";
+"use client";
 import {
   Accessibility,
   House,
@@ -9,52 +9,71 @@ import {
   SlidersHorizontal,
 } from "lucide-react";
 
-import { FilterButton, FilterButtonProps } from "./ui/FilterButton";
+import { FilterButton } from "./ui/FilterButton";
 
-export const FilterList = () => {
-  const filterButtons: FilterButtonProps[] = [
+type FilterListProps = {
+  selectedFilters: string[];
+  handleFilterClick: (filterKey: string) => void;
+  clearFilters: () => void;
+};
+
+export const FilterList = ({
+  selectedFilters,
+  handleFilterClick,
+  clearFilters,
+}: FilterListProps) => {
+  const filterButtons = [
     {
-      title: "Accessible",
+      title: "Wheelchair",
+      filterKey: "wheelChairAccessible",
       icon: <Accessibility />,
-      onClick: () => console.log("Accessible"),
     },
     {
       title: "Spacious",
+      filterKey: "spacious",
       icon: <House />,
-      onClick: () => console.log("Spacious"),
     },
     {
       title: "Apartment",
+      filterKey: "apartment",
       icon: <Building />,
-      onClick: () => console.log("Apartment"),
     },
     {
-      title: "Pet friendly",
+      title: "Pet Friendly",
+      filterKey: "petFriendly",
       icon: <PawPrint />,
-      onClick: () => console.log("Pet friendly"),
     },
     {
-      title: "Close to nature",
+      title: "Close to Nature",
+      filterKey: "closeToNature",
       icon: <TreePine />,
-      onClick: () => console.log("Close to nature"),
     },
     {
-      title: "Near water",
+      title: "Near Water",
+      filterKey: "nearWater",
       icon: <Waves />,
-      onClick: () => console.log("Near water"),
-    },
-    {
-      title: "All filters",
-      icon: <SlidersHorizontal />,
-      onClick: () => console.log("All filters"),
     },
   ];
 
   return (
     <div className="flex gap-3 items-center justify-center flex-wrap max-w-screen py-6">
-      {filterButtons.map((button, index) => (
-        <FilterButton key={index} {...button} />
+      {filterButtons.map((button) => (
+        <FilterButton
+          key={button.filterKey}
+          title={button.title}
+          icon={button.icon}
+          onClick={() => {
+            handleFilterClick(button.filterKey);
+          }}
+          isSelected={selectedFilters.includes(button.filterKey)}
+        />
       ))}
+      <FilterButton
+        title="Clear filters"
+        icon={<SlidersHorizontal />}
+        onClick={clearFilters}
+        isSelected={false}
+      />
     </div>
   );
 };

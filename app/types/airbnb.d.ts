@@ -1,13 +1,13 @@
 export type Accessibility = {
-    [x: string]: any;
-    nearWater: boolean;
-    closeToNature: boolean;
+    [key: string]: boolean;
     wheelChairAccessible: boolean;
-    petFriendly: boolean;
     spacious: boolean;
     apartment: boolean;
+    petFriendly: boolean;
+    closeToNature: boolean;
+    nearWater: boolean;
 };
-
+  
 export type Airbnb = {
     airbnbId: string;
     title: string;

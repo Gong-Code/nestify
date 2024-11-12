@@ -11,11 +11,13 @@ import { FilterList } from "../components/FilterList";
 import Image from "next/image";
 import { CircleUserRound } from "lucide-react";
 import { Loader } from "../helpers/Loader";
+import { filterAirbnbs } from "../lib/filterAirbnbs";
 
 const LandingPage = () => {
   const [airbnbs, setAirbnbs] = useState<Airbnb[]>([]);
   const [searchValue, setSearchValue] = useState("");
   const [loading, setLoading] = useState(false);
+  const [selectedFilters, setSelectedFilters] = useState<string[]>([]);
 
   const landingPageImage = "/assets/images/landingPageImg.jpg";
 
@@ -36,6 +38,25 @@ const LandingPage = () => {
   const handleSearchInput = (event: React.ChangeEvent<HTMLInputElement>) => {
     setSearchValue(event.target.value);
   };
+
+  const handleFilterClick = (filter: string) => {
+    setSelectedFilters((prevFilters) => {
+      const newFilters = prevFilters.includes(filter)
+        ? prevFilters.filter((f) => f !== filter)
+        : [...prevFilters, filter];
+      return newFilters;
+    });
+  };
+
+  const clearFilters = () => {
+    setSelectedFilters([]);
+  };
+
+  const searchFilteredAirbnbs = filterAirbnbs(
+    airbnbs,
+    selectedFilters,
+    searchValue
+  );
 
   if (loading) {
     return <Loader />;
@@ -74,7 +95,11 @@ const LandingPage = () => {
           </div>
         </div>
         <div className="py-9">
-          <FilterList />
+          <FilterList
+            selectedFilters={selectedFilters}
+            handleFilterClick={handleFilterClick}
+            clearFilters={clearFilters}
+          />
         </div>
         <div className="flex justify-center">
           <div className="overflow-x-hidden px-4 md:px-12 mx-auto">
@@ -82,7 +107,11 @@ const LandingPage = () => {
             <p className="hidden md:block pb-6">
               Take a look at our most popular accommodations!
             </p>
-            <AirbnbList airbnbs={airbnbs} />
+            <AirbnbList
+              airbnbs={searchFilteredAirbnbs}
+              selectedFilters={selectedFilters}
+              searchValue={searchValue}
+            />
           </div>
         </div>
       </div>

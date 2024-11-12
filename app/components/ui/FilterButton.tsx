@@ -4,13 +4,23 @@ export type FilterButtonProps = {
   title: string;
   icon: React.ReactNode;
   onClick: () => void;
+  isSelected: boolean;
 };
 
-export const FilterButton = ({ title, icon, onClick }: FilterButtonProps) => {
+export const FilterButton = ({
+  title,
+  icon,
+  onClick,
+  isSelected,
+}: FilterButtonProps) => {
   return (
     <button
       onClick={onClick}
-      className="text-sm text-[--color-text-primary] outline outline-1 outline-[--color-primary] transition hover:translate-y-0.5 w-fit aspect-square md:aspect-auto md:h-[33px] md:pl-3.5 md:pr-4 p-2 rounded-full flex items-center gap-1 last:bg-[--color-primary] last:text-[--color-text-secondary] last:outline-[--color-background]"
+      className={`text-sm transition hover:translate-y-0.5 w-fit h-[33px] pl-3.5 pr-4 p-2 rounded-full flex items-center gap-1 ${
+        isSelected
+          ? "bg-[--color-primary] text-[--color-text-secondary] outline outline-1 outline-[--color-background]"
+          : "text-[--color-text-primary] outline outline-1 outline-[--color-primary]"
+      }`}
     >
       {icon}
       <span className="filterTitle hidden md:block">{title}</span>
