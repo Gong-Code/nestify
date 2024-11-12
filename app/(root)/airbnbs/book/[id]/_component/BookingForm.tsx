@@ -70,8 +70,8 @@ export const BookingForm = ({
     const params = new URLSearchParams({
       airbnbId,
       userId: user.id,
-      checkIn,
-      checkOut,
+      checkIn: new Date(checkIn).toISOString(),
+      checkOut: new Date(checkOut).toISOString(),
       guests: guests.toString(),
       totalAmount: totalAmount.toString(),
       title: airbnb?.title || "",

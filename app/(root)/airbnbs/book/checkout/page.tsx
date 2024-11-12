@@ -73,6 +73,11 @@ const CheckoutPage = () => {
     fetchBookingDetails();
   }, [searchParams]);
 
+  const handleRequestToBook = async () => {
+    const query = new URLSearchParams(bookingDetails).toString();
+    router.push(`/airbnbs/book/payment?${query}`);
+  };
+
   if (loading) {
     return <Loader />;
   }
@@ -119,7 +124,10 @@ const CheckoutPage = () => {
             </div>
           </div>
 
-          <button className="bg-[--color-primary] hover:bg-[--color-primary-hover] text-[--color-text-secondary] font-bold py-2 px-4 rounded-md mt-4 w-full">
+          <button
+            onClick={handleRequestToBook}
+            className="bg-[--color-primary] hover:bg-[--color-primary-hover] text-[--color-text-secondary] font-bold py-2 px-4 rounded-md mt-4 w-full"
+          >
             Request to book
           </button>
         </div>
