@@ -75,7 +75,7 @@ const UserPage = () => {
               </div>
             </div>
 
-            <div className="bg-white p-6 rounded-lg shadow-lg w-full md:w-1/2 md:ml-auto">
+            <div className=" p-6 rounded-lg shadow-lg w-full md:w-1/2 md:ml-auto">
               <h2 className="text-xl font-bold mb-4">Active Bookings</h2>
               {activeBookings.map((booking) => (
                 <BookingDetails key={booking.bookingId} booking={booking} />
