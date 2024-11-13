@@ -108,10 +108,10 @@ const CheckoutPage = () => {
                   Edit
                 </button>
               </div>
-              <p className="text-[--color-text-primary] font-bold text-lg md:text-base">
+              <p className="text-[--color-text-primary] font-bold text-lg md:text-base mb-4">
                 Price per night: {bookingDetails.totalAmount} SEK
               </p>
-              <p className="text-[--color-text-primary] font-bold text-lg md:text-base">
+              <p className="text-[--color-text-primary] font-bold text-lg md:text-base mb-4">
                 Selected dates: {bookingDetails.checkIn} -{" "}
                 {bookingDetails.checkOut}
               </p>

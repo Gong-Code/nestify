@@ -87,14 +87,6 @@ export const Navbar = () => {
             <>
               <button
                 className="flex items-center gap-1.5 bg-[--color-primary] hover:bg-[--color-primary-hover] px-3 py-2 rounded-full"
-                onClick={() => router.push("/booking")}
-              >
-                <Calendar className="text-[--color-text-secondary] size-6" />
-                <p className="text-[--color-text-secondary]">Booking</p>
-              </button>
-
-              <button
-                className="flex items-center gap-1.5 bg-[--color-primary] hover:bg-[--color-primary-hover] px-3 py-2 rounded-full"
                 onClick={() => router.push("/user")}
               >
                 <CircleUserRound className="text-[--color-text-secondary] size-6" />
