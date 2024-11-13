@@ -12,12 +12,18 @@ import Image from "next/image";
 import { CircleUserRound } from "lucide-react";
 import { Loader } from "../helpers/Loader";
 import { filterAirbnbs } from "../lib/filterAirbnbs";
+import { useRouter } from "next/navigation";
+import { useAuth } from "../providers/authProvider";
 
 const LandingPage = () => {
   const [airbnbs, setAirbnbs] = useState<Airbnb[]>([]);
   const [searchValue, setSearchValue] = useState("");
   const [loading, setLoading] = useState(false);
   const [selectedFilters, setSelectedFilters] = useState<string[]>([]);
+
+  const { user: currentUser } = useAuth();
+
+  const router = useRouter();
 
   const landingPageImage = "/assets/images/landingPageImg.jpg";
 
@@ -52,6 +58,14 @@ const LandingPage = () => {
     setSelectedFilters([]);
   };
 
+  const handleUserIconClick = () => {
+    if (currentUser) {
+      router.push("/user");
+    } else {
+      router.push("/log-in");
+    }
+  };
+
   const searchFilteredAirbnbs = filterAirbnbs(
     airbnbs,
     selectedFilters,
@@ -82,7 +96,10 @@ const LandingPage = () => {
                   value={searchValue}
                 />
                 <div className="bg-[--color-primary] py-1 px-1 rounded-full md:hidden">
-                  <CircleUserRound className="text-[--color-text-secondary] size-8" />
+                  <CircleUserRound
+                    onClick={handleUserIconClick}
+                    className="text-[--color-text-secondary] size-8 cursor-pointer"
+                  />
                 </div>
               </div>
             </div>
