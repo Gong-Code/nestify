@@ -16,6 +16,10 @@ const UserPage = () => {
   const [activeBookings, setActiveBookings] = useState<Booking[]>([]);
   const [previousBookings, setPreviousBookings] = useState<Booking[]>([]);
 
+  const capitalizeFirstLetter = (string: string = "") => {
+    return string.charAt(0).toUpperCase() + string.slice(1).toLowerCase();
+  };
+
   const getInitials = (firstName: string, lastName: string) => {
     const initials = `${firstName[0]}${lastName[0]}`;
     return initials.toUpperCase();
@@ -65,13 +69,16 @@ const UserPage = () => {
                 <div className="w-24 h-24 rounded-full bg-blue-800 text-white flex items-center justify-center text-4xl font-bold border-4 border-blue-500">
                   {initials}
                 </div>
-                <p className="text-lg font-medium mt-2">
-                  {currentUser?.firstName} {currentUser?.lastName}
+                <p className="text-2xl font-bold mt-2">
+                  {capitalizeFirstLetter(currentUser?.firstName ?? "")}{" "}
+                  {capitalizeFirstLetter(currentUser?.lastName ?? "")}
                 </p>
               </div>
               <div className="text-center">
                 <p>Active bookings: {activeBookings.length}</p>
-                <p>Previous bookings: {previousBookings.length}</p>
+                <p className="text-gray-400">
+                  Previous bookings: {previousBookings.length}
+                </p>
               </div>
             </div>
 

@@ -30,15 +30,15 @@ export const BookingDetails = ({ booking }: BookingDetailsProps) => {
           style={{ width: "300px", height: "200px", objectFit: "cover" }}
         />
       )}
-      <div className="flex flex-col justify-between space-y-4">
+      <div className="flex flex-col justify-between space-y-2">
         <h3 className="text-xl font-medium">{booking.airbnbTitle}</h3>
-        <p>
+        <p className="text-[--color-primary]">
           Check in: {checkInDate ? checkInDate.toLocaleDateString() : "N/A"}
         </p>
-        <p>
+        <p className="text-[--color-primary]">
           Check out: {checkOutDate ? checkOutDate.toLocaleDateString() : "N/A"}
         </p>
-        <p>Guests: {booking.guests}</p>
+        <p className="text-[--color-primary]">Guests: {booking.guests}</p>
       </div>
     </div>
   );
