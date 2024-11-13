@@ -1,6 +1,20 @@
+"use client";
+
 import { Check } from "lucide-react";
+import { useRouter } from "next/navigation";
+import { useEffect } from "react";
 
 const SuccessPage = () => {
+  const router = useRouter();
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      router.push("/");
+    }, 2000);
+
+    return () => clearTimeout(timer);
+  }, []);
+
   return (
     <div className="flex items-center justify-center min-h-screen bg-[--color-background]">
       <div className="p-8 rounded-lg flex flex-col md:flex-row items-center text-center md:text-left">
