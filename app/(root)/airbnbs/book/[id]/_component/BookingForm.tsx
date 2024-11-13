@@ -67,16 +67,21 @@ export const BookingForm = ({
       return;
     }
 
+    const checkInDate = new Date(checkIn).toISOString().split("T")[0];
+    const checkOutDate = new Date(checkOut).toISOString().split("T")[0];
+
     const params = new URLSearchParams({
       airbnbId,
       userId: user.id,
-      checkIn: new Date(checkIn).toISOString(),
-      checkOut: new Date(checkOut).toISOString(),
+      checkIn: checkInDate,
+      checkOut: checkOutDate,
       guests: guests.toString(),
       totalAmount: totalAmount.toString(),
       title: airbnb?.title || "",
       images: airbnb?.images[0]?.toString() || "",
     }).toString();
+
+    console.log("params:", params);
 
     router.push(`/airbnbs/book/checkout?${params}`);
   };

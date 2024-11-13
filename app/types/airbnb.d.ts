@@ -21,10 +21,12 @@ export type Airbnb = {
 export type Booking = {
     bookingId: string;
     airbnbId: string;
+    airbnbTitle: string;
     userId: string;
     checkIn: Date;
     checkOut: Date;
     guests: number;
     totalPrice: number;
+    images?: string[];
     paymentStatus: "paid" | "failed";
 }

@@ -78,7 +78,7 @@ export const PaymentForm = ({ bookingDetails }: PaymentFormProps) => {
     }
 
     try {
-      const amount = Number(bookingDetails.totalAmount);
+      const amount = Number(bookingDetails.totalAmount) * 100;
       const currency = "SEK";
       const clientSecret = await handleStripePayment(amount, currency);
 
@@ -98,17 +98,32 @@ export const PaymentForm = ({ bookingDetails }: PaymentFormProps) => {
         throw new Error(confirmError.message);
       }
 
+      const checkInDateString = new Date(bookingDetails.checkIn)
+        .toISOString()
+        .split("T")[0];
+      const checkOutDateString = new Date(bookingDetails.checkOut)
+        .toISOString()
+        .split("T")[0];
+
+      const checkInDate = new Date(checkInDateString);
+      const checkOutDate = new Date(checkOutDateString);
+
       console.log("Payment confirmed");
+
+      console.log("Check-in date:", checkInDate);
+      console.log("Check-out date:", checkOutDate);
 
       const bookingId = await bookAirbnb({
         bookingId: bookingDetails.bookingId,
+        airbnbTitle: bookingDetails.title,
         airbnbId: bookingDetails.airbnbId,
         userId: bookingDetails.userId,
-        checkIn: new Date(bookingDetails.checkIn),
-        checkOut: new Date(bookingDetails.checkOut),
+        checkIn: checkInDate,
+        checkOut: checkOutDate,
         guests: Number(bookingDetails.guests),
-        totalPrice: amount,
+        totalPrice: amount / 100,
         paymentStatus: "paid",
+        images: [bookingDetails.images],
       });
       console.log("Booking saved with ID:", bookingId);
       setLoading(false);
