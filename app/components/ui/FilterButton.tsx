@@ -5,6 +5,7 @@ export type FilterButtonProps = {
   icon: React.ReactNode;
   onClick: () => void;
   isSelected: boolean;
+  className?: string;
 };
 
 export const FilterButton = ({
@@ -12,6 +13,7 @@ export const FilterButton = ({
   icon,
   onClick,
   isSelected,
+  className = "",
 }: FilterButtonProps) => {
   return (
     <button
@@ -20,7 +22,7 @@ export const FilterButton = ({
         isSelected
           ? "bg-[--color-primary] text-[--color-text-secondary] outline outline-1 outline-[--color-background]"
           : "text-[--color-text-primary] outline outline-1 outline-[--color-primary]"
-      }`}
+      } ${className}`}
     >
       {icon}
       <span className="filterTitle hidden md:block">{title}</span>

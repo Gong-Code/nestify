@@ -149,7 +149,7 @@ export const PaymentForm = ({ bookingDetails }: PaymentFormProps) => {
         Card Number
       </label>
       <CardNumberElement
-        id="card-number"
+        id="card-number-element"
         className="mt-1 block w-full border p-2 border-gray-500 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
       />
       <div id="card-errors" role="alert">

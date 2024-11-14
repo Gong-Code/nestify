@@ -1,12 +1,9 @@
 "use client";
 
-import { useEffect } from "react";
+import React, { useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { useAuth } from "@/app/providers/authProvider";
-
-const PublicLayout: React.FC<{ children: React.ReactNode }> = ({
-  children,
-}) => {
+const Layout = ({ children }: { children: React.ReactNode }) => {
   const router = useRouter();
   const { user: currentUser } = useAuth();
 
@@ -20,7 +17,7 @@ const PublicLayout: React.FC<{ children: React.ReactNode }> = ({
     return null;
   }
 
-  return <div>{children}</div>;
+  return <>{children}</>;
 };
 
-export default PublicLayout;
+export default Layout;

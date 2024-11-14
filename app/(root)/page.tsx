@@ -1,19 +1,20 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { Navbar } from "./_component/Navbar";
 import { Footer } from "./_component/Footer";
 import { Airbnb } from "../types/airbnb";
 import { fetchAirbnbs } from "../lib/airbnb.db";
 import { AirbnbList } from "./_component/AirbnbList";
 import { LandingPageSearch } from "../components/SearchInputs";
-import { FilterList } from "../components/FilterList";
 import Image from "next/image";
-import { CircleUserRound } from "lucide-react";
 import { Loader } from "../helpers/Loader";
 import { filterAirbnbs } from "../lib/filterAirbnbs";
 import { useRouter } from "next/navigation";
 import { useAuth } from "../providers/authProvider";
+import { FilterButtonIcons } from "../helpers/FilterButtonIcons";
+import { CircleUserRound, SlidersHorizontal } from "lucide-react";
+import { FilterButton } from "../components/ui/FilterButton";
 
 const LandingPage = () => {
   const [airbnbs, setAirbnbs] = useState<Airbnb[]>([]);
@@ -114,11 +115,28 @@ const LandingPage = () => {
           </div>
         </div>
         <div className="py-9">
-          <FilterList
-            selectedFilters={selectedFilters}
-            handleFilterClick={handleFilterClick}
-            clearFilters={clearFilters}
-          />
+          <div className="flex gap-3 items-center justify-center flex-wrap max-w-screen py-6">
+            {FilterButtonIcons.map((button) => (
+              <FilterButton
+                key={button.filterKey}
+                title={button.title}
+                icon={button.icon}
+                onClick={() => {
+                  handleFilterClick(button.filterKey);
+                }}
+                isSelected={selectedFilters.includes(button.filterKey)}
+              />
+            ))}
+            <FilterButton
+              title={
+                selectedFilters.length > 0 ? "Clear filters" : "All filters"
+              }
+              icon={<SlidersHorizontal />}
+              onClick={clearFilters}
+              isSelected={false}
+              className="bg-[--color-primary] text-[--color-text-secondary] hover:bg-[--color-primary-hover] hover:text-white"
+            />
+          </div>
         </div>
         <div className="flex justify-center">
           <div className="overflow-x-hidden px-4 md:px-12 mx-auto">
