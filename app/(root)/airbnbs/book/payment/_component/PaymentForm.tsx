@@ -142,48 +142,49 @@ export const PaymentForm = ({ bookingDetails }: PaymentFormProps) => {
   return (
     <form onSubmit={handleSubmit}>
       {errorMessage && <div>{errorMessage}</div>}
-      <div className="mb-4">
-        <label
-          htmlFor="card-number-element"
-          className="block text-sm font-medium text-gray-700"
-        >
-          Card Number
-        </label>
-        <CardNumberElement id="card-number-element" />
-        <div id="card-errors" role="alert">
-          {errorMessage && <div>{errorMessage}</div>}
-        </div>
+      <label
+        htmlFor="card-number"
+        className="block text-sm font-bold text-gray-700"
+      >
+        Card Number
+      </label>
+      <CardNumberElement
+        id="card-number"
+        className="mt-1 block w-full border p-2 border-gray-500 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+      />
+      <div id="card-errors" role="alert">
+        {errorMessage && <div>{errorMessage}</div>}
       </div>
-      <div className="grid grid-cols-1 gap-4 md:grid-cols-2 md:gap-6 mb-4">
+      <div className="grid mt-1 grid-cols-1 gap-2 md:grid-cols-2 md:gap-6 mb-4">
         <div>
           <label
             htmlFor="card-expiry-element"
-            className="block text-sm font-medium text-gray-700"
+            className="block text-sm font-bold text-gray-700 mb-1"
           >
             Expiration
           </label>
           <CardExpiryElement
             id="card-expiry-element"
-            className="border border-gray-300 rounded-md p-2 w-full"
+            className="border border-gray-500 rounded-md p-2 w-full"
           />
         </div>
         <div>
           <label
             htmlFor="card-cvc-element"
-            className="block text-sm font-medium text-gray-700"
+            className="block text-sm font-bold text-gray-700 mb-1"
           >
             CVC
           </label>
           <CardCvcElement
             id="card-cvc-element"
-            className="border border-gray-300 rounded-md p-2 w-full"
+            className="border border-gray-500 rounded-md p-2 w-full"
           />
         </div>
       </div>
       <div className="mb-4">
         <label
           htmlFor="country"
-          className="block text-sm font-medium text-gray-700"
+          className="block text-sm font-bold text-gray-700 mb-1"
         >
           Country
         </label>
@@ -191,7 +192,7 @@ export const PaymentForm = ({ bookingDetails }: PaymentFormProps) => {
           id="country"
           value={country}
           onChange={(e) => setCountry(e.target.value)}
-          className="border border-gray-300 rounded-md p-2 w-full"
+          className="border border-gray-500 rounded-md p-2 w-full"
         >
           <option value="">Select</option>
           <option value="SE">Sweden</option>

@@ -78,3 +78,44 @@ export async function movePastBookings(userId: string): Promise<void> {
     console.error("Error moving past bookings:", error);
   }
 }
+
+export const editBookingDetails = async (bookingDetails: Booking) => {
+  try {
+    const { airbnbId, userId, checkIn, checkOut, guests } = bookingDetails;
+
+    if (!airbnbId || !userId || !checkIn || !checkOut || !guests) {
+      throw new Error("Missing required booking details");
+    }
+
+    const userRef = doc(db, 'users', userId);
+    const userSnapshot = await getDoc(userRef);
+
+    if (userSnapshot.exists()) {
+      const userData = userSnapshot.data();
+      const activeBookings = userData.activeBookings || [];
+
+      const updatedActiveBookings = activeBookings.map((booking: Booking) => {
+        if (booking.airbnbId === airbnbId) {
+          return {
+            ...booking,
+            checkIn,
+            checkOut,
+            guests,
+          };
+        }
+        return booking;
+      });
+
+      await updateDoc(userRef, {
+        activeBookings: updatedActiveBookings,
+      });
+
+      return updatedActiveBookings.find((booking: Booking) => booking.airbnbId === airbnbId);
+    } else {
+      throw new Error("User not found");
+    }
+  } catch (error) {
+    console.error("Error editing booking details:", error);
+    throw error;
+  }
+};

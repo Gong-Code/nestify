@@ -6,6 +6,9 @@ import { Loader } from "@/app/helpers/Loader";
 import { Pencil } from "lucide-react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
+import CheckoutEditForm from "./_component/CheckoutEditForm";
+import { editBookingDetails } from "@/app/lib/booking.db";
+import { Booking } from "@/app/types/airbnb";
 
 const CheckoutPage = () => {
   const router = useRouter();
@@ -14,13 +17,15 @@ const CheckoutPage = () => {
   const [bookingDetails, setBookingDetails] = useState({
     airbnbId: "",
     userId: "",
-    checkIn: "",
-    checkOut: "",
-    guests: "",
+    checkIn: new Date() as any,
+    checkOut: new Date() as any,
+    guests: 0,
     totalAmount: "",
     title: "",
-    images: "",
+    images: [""],
   });
+
+  const [isEditing, setIsEditing] = useState(false);
 
   useEffect(() => {
     const fetchBookingDetails = () => {
@@ -31,17 +36,17 @@ const CheckoutPage = () => {
       const guests = searchParams.get("guests");
       const totalAmount = searchParams.get("totalAmount");
       const title = searchParams.get("title");
-      const images = searchParams.get("images");
+      const images = searchParams.get("images")?.split(",") || [""];
 
       console.log({
         airbnbId,
         userId,
         checkIn,
         checkOut,
-        guests,
+        guests: Number(guests),
         totalAmount,
         title,
-        images,
+        images: images as string[],
       });
 
       if (
@@ -59,9 +64,9 @@ const CheckoutPage = () => {
         setBookingDetails({
           airbnbId,
           userId,
-          checkIn,
-          checkOut,
-          guests,
+          checkIn: new Date(checkIn) as any,
+          checkOut: new Date(checkOut) as any,
+          guests: Number(guests),
           totalAmount,
           title,
           images,
@@ -74,8 +79,38 @@ const CheckoutPage = () => {
   }, [searchParams]);
 
   const handleRequestToBook = async () => {
-    const query = new URLSearchParams(bookingDetails).toString();
+    const query = new URLSearchParams({
+      airbnbId: bookingDetails.airbnbId,
+      userId: bookingDetails.userId,
+      checkIn: bookingDetails.checkIn.toString(),
+      checkOut: bookingDetails.checkOut.toString(),
+      guests: bookingDetails.guests.toString(),
+      totalAmount: bookingDetails.totalAmount,
+      title: bookingDetails.title,
+      images: bookingDetails.images.join(","),
+    }).toString();
     router.push(`/airbnbs/book/payment?${query}`);
+  };
+
+  const handleEditBookingDetails = async (updatedDetails: Booking) => {
+    try {
+      console.log("Updating booking details:", updatedDetails);
+      await editBookingDetails(updatedDetails);
+      setBookingDetails((prevDetails) => ({
+        ...prevDetails,
+        checkIn: updatedDetails.checkIn,
+        checkOut: updatedDetails.checkOut,
+        guests: updatedDetails.guests,
+      }));
+      setIsEditing(false);
+      console.log("Booking details updated successfully");
+    } catch (error) {
+      console.error("Error updating booking details:", error);
+    }
+  };
+
+  const handleCancelBooking = async () => {
+    router.push("/");
   };
 
   if (loading) {
@@ -91,29 +126,33 @@ const CheckoutPage = () => {
         <div className="bg-[--color-background] p-8 rounded-lg w-full max-w-4xl">
           <h2 className="text-3xl font-bold mb-6">Your trip</h2>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-2">
             <div>
               <img
-                src={bookingDetails.images}
+                src={bookingDetails.images?.[0]}
                 alt="Luxurious cabin on lake"
-                className="rounded-lg w-full"
+                className="rounded-md w-full h-auto max-h-64 object-cover"
               />
             </div>
 
             <div>
               <div className="flex justify-between items-center mb-4">
                 <h3 className="text-xl font-bold">{bookingDetails.title}</h3>
-                <button className="bg-[--color-secondary] hover:bg-[--color-secondary-hover] text-[--color-text-secondary] font-bold py-2 px-4 rounded-xl shadow-md md:shadow-none flex items-center">
-                  <Pencil className="mr-2" size={16} />
+                <button
+                  onClick={() => setIsEditing(true)}
+                  className="bg-[--color-secondary] hover:bg-[--color-secondary-hover] text-[--color-text-secondary] font-bold py-2 px-4 rounded-xl shadow-md md:shadow-none flex items-center"
+                >
+                  <Pencil className="mr-4" size={16} />
                   Edit
                 </button>
               </div>
-              <p className="text-[--color-text-primary] font-bold text-lg md:text-base mb-4">
+              <p className="text-[--color-text-primary] font-bold text-lg md:text-base mb-2">
                 Price per night: {bookingDetails.totalAmount} SEK
               </p>
-              <p className="text-[--color-text-primary] font-bold text-lg md:text-base mb-4">
-                Selected dates: {bookingDetails.checkIn} -{" "}
-                {bookingDetails.checkOut}
+              <p className="text-[--color-text-primary] font-bold text-lg md:text-base mb-2">
+                Selected dates:{" "}
+                {new Date(bookingDetails.checkIn).toDateString()} -{" "}
+                {new Date(bookingDetails.checkOut).toDateString()}
               </p>
               <p className="text-[--color-text-primary] font-bold mb-20 text-lg md:text-base">
                 Number of guests: {bookingDetails.guests}
@@ -124,12 +163,28 @@ const CheckoutPage = () => {
             </div>
           </div>
 
-          <button
-            onClick={handleRequestToBook}
-            className="bg-[--color-primary] hover:bg-[--color-primary-hover] text-[--color-text-secondary] font-bold py-2 px-4 rounded-md mt-4 w-full"
-          >
-            Request to book
-          </button>
+          {isEditing && (
+            <CheckoutEditForm
+              bookingDetails={bookingDetails}
+              onClose={() => setIsEditing(false)}
+              onSave={handleEditBookingDetails}
+            />
+          )}
+
+          <div className="flex justify-between items-center mt-4 gap-4">
+            <button
+              onClick={handleRequestToBook}
+              className="bg-[--color-primary] hover:bg-[--color-primary-hover] text-[--color-text-secondary] font-bold py-2 px-4 rounded-md w-full"
+            >
+              Request to Book
+            </button>
+            <button
+              onClick={handleCancelBooking}
+              className="bg-[--color-warning] hover:bg-[--color-warning-hover] text-[--color-text-secondary] font-bold py-2 px-4 rounded-md w-full"
+            >
+              Cancel
+            </button>
+          </div>
         </div>
       </div>
       <Footer />
