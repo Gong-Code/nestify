@@ -20,7 +20,8 @@ const CheckoutPage = () => {
     checkIn: new Date() as any,
     checkOut: new Date() as any,
     guests: 0,
-    totalAmount: "",
+    totalPrice: 0,
+    bookingPricePerNight: 0,
     title: "",
     images: [""],
   });
@@ -34,7 +35,8 @@ const CheckoutPage = () => {
       const checkIn = searchParams.get("checkIn");
       const checkOut = searchParams.get("checkOut");
       const guests = searchParams.get("guests");
-      const totalAmount = searchParams.get("totalAmount");
+      const totalPrice = searchParams.get("totalAmount");
+      const bookingPricePerNight = searchParams.get("bookingPricePerNight");
       const title = searchParams.get("title");
       const images = searchParams.get("images")?.split(",") || [""];
 
@@ -44,7 +46,8 @@ const CheckoutPage = () => {
         checkIn,
         checkOut,
         guests: Number(guests),
-        totalAmount,
+        totalPrice: Number(totalPrice),
+        bookingPricePerNight: Number(bookingPricePerNight),
         title,
         images: images as string[],
       });
@@ -55,7 +58,8 @@ const CheckoutPage = () => {
         !checkIn ||
         !checkOut ||
         !guests ||
-        !totalAmount ||
+        !totalPrice ||
+        !bookingPricePerNight ||
         !title ||
         !images
       ) {
@@ -67,7 +71,8 @@ const CheckoutPage = () => {
           checkIn: new Date(checkIn) as any,
           checkOut: new Date(checkOut) as any,
           guests: Number(guests),
-          totalAmount,
+          totalPrice: Number(totalPrice),
+          bookingPricePerNight: Number(bookingPricePerNight),
           title,
           images,
         });
@@ -85,7 +90,8 @@ const CheckoutPage = () => {
       checkIn: bookingDetails.checkIn.toString(),
       checkOut: bookingDetails.checkOut.toString(),
       guests: bookingDetails.guests.toString(),
-      totalAmount: bookingDetails.totalAmount,
+      totalAmount: bookingDetails.totalPrice.toString(),
+      bookingPricePerNight: bookingDetails.bookingPricePerNight.toString(),
       title: bookingDetails.title,
       images: bookingDetails.images.join(","),
     }).toString();
@@ -101,6 +107,7 @@ const CheckoutPage = () => {
         checkIn: updatedDetails.checkIn,
         checkOut: updatedDetails.checkOut,
         guests: updatedDetails.guests,
+        totalPrice: updatedDetails.totalPrice as number,
       }));
       setIsEditing(false);
       console.log("Booking details updated successfully");
@@ -147,18 +154,18 @@ const CheckoutPage = () => {
                 </button>
               </div>
               <p className="text-[--color-text-primary] font-bold text-lg md:text-base mb-2">
-                Price per night: {bookingDetails.totalAmount} SEK
+                Price per night: {bookingDetails.totalPrice} SEK
               </p>
               <p className="text-[--color-text-primary] font-bold text-lg md:text-base mb-2">
                 Selected dates:{" "}
-                {new Date(bookingDetails.checkIn).toDateString()} -{" "}
-                {new Date(bookingDetails.checkOut).toDateString()}
+                {new Date(bookingDetails.checkIn).toLocaleDateString()} -{" "}
+                {new Date(bookingDetails.checkOut).toLocaleDateString()}
               </p>
               <p className="text-[--color-text-primary] font-bold mb-20 text-lg md:text-base">
                 Number of guests: {bookingDetails.guests}
               </p>
               <p className="text-[--color-text-primary] font-bold text-lg md:text-base">
-                Total: {bookingDetails.totalAmount} SEK
+                Total: {bookingDetails.totalPrice} SEK
               </p>
             </div>
           </div>

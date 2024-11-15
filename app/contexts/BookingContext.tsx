@@ -9,6 +9,8 @@ type BookingContextType = {
   setCheckOut: (checkOut: string) => void;
   guests: number;
   setGuests: (guests: number) => void;
+  bookingPricePerNight: number;
+  setBookingPricePerNight: (bookingPricePerNight: number) => void;
 };
 
 const BookingContext = createContext<BookingContextType | undefined>(undefined);
@@ -17,6 +19,7 @@ export const BookingProvider = ({ children }: { children: ReactNode }) => {
   const [checkIn, setCheckIn] = useState<string>("");
   const [checkOut, setCheckOut] = useState<string>("");
   const [guests, setGuests] = useState(1);
+  const [bookingPricePerNight, setBookingPricePerNight] = useState<number>(0);
 
   return (
     <BookingContext.Provider
@@ -27,6 +30,8 @@ export const BookingProvider = ({ children }: { children: ReactNode }) => {
         setCheckOut,
         guests,
         setGuests,
+        bookingPricePerNight,
+        setBookingPricePerNight,
       }}
     >
       {children}

@@ -20,8 +20,16 @@ export const BookingForm = ({
   pricePerNight,
   maxGuests,
 }: BookingFormProps) => {
-  const { checkIn, setCheckIn, checkOut, setCheckOut, guests, setGuests } =
-    useBooking();
+  const {
+    checkIn,
+    setCheckIn,
+    checkOut,
+    setCheckOut,
+    guests,
+    setGuests,
+    bookingPricePerNight,
+    setBookingPricePerNight,
+  } = useBooking();
   const { user } = useAuth();
   const router = useRouter();
   const [totalAmount, setTotalAmount] = useState(0);
@@ -34,19 +42,22 @@ export const BookingForm = ({
       const checkOutDate = new Date(checkOut);
       const nights =
         (checkOutDate.getTime() - checkInDate.getTime()) / (1000 * 3600 * 24);
-      setTotalAmount(nights * pricePerNight);
+      setTotalAmount(nights * bookingPricePerNight);
     };
 
     if (checkIn && checkOut) {
       calculateTotalAmount();
     }
-  }, [checkIn, checkOut, pricePerNight]);
+  }, [checkIn, checkOut, bookingPricePerNight]);
 
   useEffect(() => {
     const fetchAirbnb = async () => {
       try {
         const airbnbDetails = await fetchAirbnbById(airbnbId);
         setAirbnb(airbnbDetails);
+        if (airbnbDetails) {
+          setBookingPricePerNight(airbnbDetails.pricePerNight);
+        }
       } catch (error) {
         console.error("Failed to fetch Airbnb details:", error);
       }
@@ -77,11 +88,13 @@ export const BookingForm = ({
       checkOut: checkOutDate,
       guests: guests.toString(),
       totalAmount: totalAmount.toString(),
+      bookingPricePerNight: bookingPricePerNight.toString(),
       title: airbnb?.title || "",
       images: airbnb?.images[0]?.toString() || "",
     }).toString();
 
     console.log("params:", params);
+    console.log("Booking Price Per Night:", bookingPricePerNight);
 
     router.push(`/airbnbs/book/checkout?${params}`);
   };
@@ -103,7 +116,7 @@ export const BookingForm = ({
               value={checkIn}
               onChange={(e) => setCheckIn(e.target.value)}
               className="border border-blue-500 p-3 rounded w-full"
-              min={new Date().toISOString().split("T")[0]} // Disable past dates
+              min={new Date().toISOString().split("T")[0]}
             />
           </div>
           <div className="flex-1">
@@ -116,7 +129,7 @@ export const BookingForm = ({
               value={checkOut}
               onChange={(e) => setCheckOut(e.target.value)}
               className="border border-blue-500 p-3 rounded w-full"
-              min={checkIn || new Date().toISOString().split("T")[0]} // Disable past dates and ensure check-out is after check-in
+              min={checkIn || new Date().toISOString().split("T")[0]}
             />
           </div>
         </div>

@@ -25,6 +25,7 @@ export type Booking = {
     userId: string;
     checkIn: Date;
     checkOut: Date;
+    bookingPricePerNight?: number;
     guests: number;
     totalPrice?: number;
     images?: string[];

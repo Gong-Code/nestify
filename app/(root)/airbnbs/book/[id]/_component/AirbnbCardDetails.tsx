@@ -7,8 +7,8 @@ import { Carousel } from "@/app/components/Carousel";
 import { Navbar } from "@/app/(root)/_component/Navbar";
 import Image from "next/image";
 import { UserCircle } from "lucide-react";
-import { BookingForm } from "./BookingForm"; // Adjust the import path as necessary
-import { AccessibilityIcons } from "@/app/components/AccessibilityIcons"; // Adjust the import path as necessary
+import { BookingForm } from "./BookingForm";
+import { AccessibilityIcons } from "@/app/components/AccessibilityIcons";
 
 type AirbnbCardDetailsProps = {
   airbnb: Airbnb;
