@@ -7,7 +7,7 @@ import { signOut } from "firebase/auth";
 import { auth } from "@/firebase.config";
 import { useAuth } from "@/app/providers/authProvider";
 
-import { Calendar, CircleUserRound, LogOut } from "lucide-react";
+import { CircleUserRound, LogOut } from "lucide-react";
 import { NavbarSearch } from "@/app/components/SearchInputs";
 
 export const Navbar = () => {

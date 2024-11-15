@@ -9,6 +9,7 @@ import { useAuth } from "@/app/providers/authProvider";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { Navbar } from "@/app/(root)/_component/Navbar";
+import Image from "next/image";
 
 type RegisterFormValues = z.infer<typeof registerSchema>;
 
@@ -45,11 +46,13 @@ export const RegisterForm = () => {
         <Navbar />
       </header>
       <div className="flex flex-col md:flex-row h-screen">
-        <div className="md:w-1/2 h-1/2 md:h-full">
-          <img
+        <div className="relative w-full h-1/2 md:w-1/2 md:h-full">
+          <Image
             src={registerImage}
             alt="Register image"
-            className="w-full h-full object-cover"
+            layout="fill"
+            objectFit="cover"
+            priority
           />
         </div>
         <div className="md:w-1/2 flex justify-center items-center bg-[--color-background] p-4 md:p-0">
