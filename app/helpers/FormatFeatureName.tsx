@@ -1,5 +1,3 @@
-import React from "react";
-
 export const FormatFeatureName = (feature: string) => {
   return feature
     .replace(/([A-Z])/g, " $1")

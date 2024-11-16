@@ -17,8 +17,8 @@ const CheckoutPage = () => {
   const [bookingDetails, setBookingDetails] = useState({
     airbnbId: "",
     userId: "",
-    checkIn: new Date() as any,
-    checkOut: new Date() as any,
+    checkIn: new Date(),
+    checkOut: new Date(),
     guests: 0,
     totalPrice: 0,
     bookingPricePerNight: 0,
@@ -68,8 +68,8 @@ const CheckoutPage = () => {
         setBookingDetails({
           airbnbId,
           userId,
-          checkIn: new Date(checkIn) as any,
-          checkOut: new Date(checkOut) as any,
+          checkIn: new Date(checkIn as string),
+          checkOut: new Date(checkOut as string),
           guests: Number(guests),
           totalPrice: Number(totalPrice),
           bookingPricePerNight: Number(bookingPricePerNight),

@@ -46,6 +46,3 @@ export const useBooking = () => {
   }
   return context;
 };
-function setError(message: string | undefined) {
-  throw new Error("Function not implemented.");
-}
