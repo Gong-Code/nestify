@@ -2,20 +2,20 @@
   "version": 2,
   "builds": [
     {
-      "src": "app/package.json",
+      "src": "nextify/package.json",
       "use": "@vercel/next"
     }
   ],
   "routes": [
     {
       "src": "/(.*)",
-      "dest": "/app/$1"
+      "dest": "/nextify/$1"
     }
   ],
   "rewrites": [
     {
       "source": "/(.*)",
-      "destination": "/app"
+      "destination": "/nextify"
     }
   ]
 }
