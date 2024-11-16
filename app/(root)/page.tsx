@@ -36,6 +36,8 @@ const LandingPage = () => {
         console.log(airbnbList);
       } catch (error) {
         console.log("Error fetching airbnbs", error);
+      } finally {
+        setLoading(false);
       }
     };
 
