@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
-const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY as string, {
-    apiVersion: "2022-11-15",
+import Stripe from "stripe";
+const stripe = new Stripe(process.env.STRIPE_SECRET_KEY as string, {
+    apiVersion: "2024-10-28.acacia",
 });
 
 export async function POST(request: NextRequest) {
