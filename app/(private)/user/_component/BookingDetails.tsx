@@ -9,15 +9,17 @@ export const BookingDetails = ({ booking }: BookingDetailsProps) => {
   const checkInDate =
     booking.checkIn instanceof Date
       ? booking.checkIn
-      : booking.checkIn && (booking.checkIn as any).toDate
-      ? (booking.checkIn as any).toDate()
+      : booking.checkIn &&
+        (booking.checkIn as unknown as { toDate: () => Date }).toDate
+      ? (booking.checkIn as unknown as { toDate: () => Date }).toDate()
       : null;
 
   const checkOutDate =
-    booking.checkIn instanceof Date
+    booking.checkOut instanceof Date
       ? booking.checkOut
-      : booking.checkOut && (booking.checkOut as any).toDate
-      ? (booking.checkOut as any).toDate()
+      : booking.checkOut &&
+        (booking.checkOut as unknown as { toDate: () => Date }).toDate
+      ? (booking.checkOut as unknown as { toDate: () => Date }).toDate()
       : null;
 
   return (
