@@ -10,6 +10,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { Navbar } from "@/app/(root)/_component/Navbar";
 import Image from "next/image";
+import toast, { Toaster } from "react-hot-toast";
 
 type RegisterFormValues = z.infer<typeof registerSchema>;
 
@@ -33,7 +34,8 @@ export const RegisterForm = () => {
         throw new Error("Registration failed, no ID returned");
       }
       console.log("User registered successfully");
-      router.push("/log-in");
+      router.push("/");
+      toast.success("User registered successfully");
       form.reset();
     } catch (error) {
       console.error("Error registering user:", error);

@@ -10,6 +10,7 @@ import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { Navbar } from "@/app/(root)/_component/Navbar";
 import Image from "next/image";
+import toast, { Toaster } from "react-hot-toast";
 
 type LoginFormValues = z.infer<typeof loginSchema>;
 
@@ -30,6 +31,7 @@ export const LoginForm = () => {
     if (userExists) {
       router.push("/");
       console.log("User logged in");
+      toast.success("User logged in successfully");
     } else {
       console.log("Wrong email or password");
     }
