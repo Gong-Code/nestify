@@ -8,18 +8,14 @@ import { Airbnb } from "@/app/types/airbnb";
 import { validateBooking } from "@/app/validation/validateBooking";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
+import toast, { Toaster } from "react-hot-toast";
 
 type BookingFormProps = {
   airbnbId: string;
   pricePerNight: number;
-  maxGuests: number;
 };
 
-export const BookingForm = ({
-  airbnbId,
-  pricePerNight,
-  maxGuests,
-}: BookingFormProps) => {
+export const BookingForm = ({ airbnbId, pricePerNight }: BookingFormProps) => {
   const {
     checkIn,
     setCheckIn,
@@ -29,6 +25,8 @@ export const BookingForm = ({
     setGuests,
     bookingPricePerNight,
     setBookingPricePerNight,
+    maxGuests,
+    fetchAndSetMaxGuests,
   } = useBooking();
   const { user } = useAuth();
   const router = useRouter();
@@ -57,6 +55,7 @@ export const BookingForm = ({
         setAirbnb(airbnbDetails);
         if (airbnbDetails) {
           setBookingPricePerNight(airbnbDetails.pricePerNight);
+          fetchAndSetMaxGuests(airbnbId);
         }
       } catch (error) {
         console.error("Failed to fetch Airbnb details:", error);
@@ -78,6 +77,11 @@ export const BookingForm = ({
       return;
     }
 
+    if (guests < 1 || guests > maxGuests) {
+      toast.error(`The number of guests must be between 1 and ${maxGuests}.`);
+      return;
+    }
+
     const checkInDate = new Date(checkIn).toISOString().split("T")[0];
     const checkOutDate = new Date(checkOut).toISOString().split("T")[0];
 
@@ -89,6 +93,7 @@ export const BookingForm = ({
       guests: guests.toString(),
       totalAmount: totalAmount.toString(),
       bookingPricePerNight: bookingPricePerNight.toString(),
+      maxGuests: maxGuests.toString(),
       title: airbnb?.title || "",
       images: airbnb?.images[0]?.toString() || "",
     }).toString();
@@ -141,8 +146,16 @@ export const BookingForm = ({
             type="number"
             id="guests"
             value={guests}
-            onChange={(e) => setGuests(Number(e.target.value))}
+            onChange={(e) => {
+              const value = Math.max(
+                1,
+                Math.min(Number(e.target.value), maxGuests)
+              );
+              setGuests(value);
+            }}
             className="border border-blue-500 p-3 rounded w-1/2"
+            min="1"
+            max={maxGuests}
           />
           {guestError && <p className="text-red-500 mt-2">{guestError}</p>}
         </div>

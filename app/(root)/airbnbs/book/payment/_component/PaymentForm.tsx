@@ -10,6 +10,7 @@ import {
 } from "@stripe/react-stripe-js";
 import { bookAirbnb } from "@/app/lib/booking.db";
 import { useRouter } from "next/navigation";
+import toast, { Toaster } from "react-hot-toast";
 
 type BookingDetails = {
   airbnbId: string;
@@ -125,6 +126,7 @@ export const PaymentForm = ({ bookingDetails }: PaymentFormProps) => {
         paymentStatus: "paid",
         images: [bookingDetails.images],
       });
+      toast.success("Booking confirmed! 🎉");
       console.log("Booking saved with ID:", bookingId);
       setLoading(false);
       router.push("/airbnbs/book/success");
@@ -141,7 +143,6 @@ export const PaymentForm = ({ bookingDetails }: PaymentFormProps) => {
 
   return (
     <form onSubmit={handleSubmit}>
-      {errorMessage && <div>{errorMessage}</div>}
       <label
         htmlFor="card-number"
         className="block text-sm font-bold text-gray-700"
@@ -153,7 +154,7 @@ export const PaymentForm = ({ bookingDetails }: PaymentFormProps) => {
         className="mt-1 block w-full border p-2 border-gray-500 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
       />
       <div id="card-errors" role="alert">
-        {errorMessage && <div>{errorMessage}</div>}
+        {errorMessage && <div className="text-red-600">{errorMessage}</div>}
       </div>
       <div className="grid mt-1 grid-cols-1 gap-2 md:grid-cols-2 md:gap-6 mb-4">
         <div>
@@ -199,7 +200,6 @@ export const PaymentForm = ({ bookingDetails }: PaymentFormProps) => {
           <option value="US">United States</option>
           <option value="CA">Canada</option>
           <option value="GB">United Kingdom</option>
-          {/* Add more countries as needed */}
         </select>
       </div>
       <button

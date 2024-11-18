@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Booking } from "@/app/types/airbnb";
+import toast from "react-hot-toast";
 
 interface CheckoutEditFormProps {
   bookingDetails: Booking;
@@ -47,6 +48,18 @@ const CheckoutEditForm: React.FC<CheckoutEditFormProps> = ({
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+
+    if (guests > bookingDetails.guests) {
+      toast.error(
+        `The number of guests cannot exceed ${bookingDetails.guests}.`
+      );
+      return;
+    }
+    if (guests < 1) {
+      toast.error("The number of guests must be at least 1.");
+      return;
+    }
+
     const updatedDetails: Booking = {
       ...bookingDetails,
       checkIn: new Date(checkIn),

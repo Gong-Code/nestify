@@ -24,6 +24,7 @@ const CheckoutPage = () => {
     bookingPricePerNight: 0,
     title: "",
     images: [""],
+    maxGuests: 0,
   });
 
   const [isEditing, setIsEditing] = useState(false);
@@ -39,6 +40,7 @@ const CheckoutPage = () => {
       const bookingPricePerNight = searchParams.get("bookingPricePerNight");
       const title = searchParams.get("title");
       const images = searchParams.get("images")?.split(",") || [""];
+      const maxGuests = searchParams.get("maxGuests");
 
       console.log({
         airbnbId,
@@ -50,6 +52,7 @@ const CheckoutPage = () => {
         bookingPricePerNight: Number(bookingPricePerNight),
         title,
         images: images as string[],
+        maxGuests: Number(maxGuests),
       });
 
       if (
@@ -61,7 +64,8 @@ const CheckoutPage = () => {
         !totalPrice ||
         !bookingPricePerNight ||
         !title ||
-        !images
+        !images ||
+        !maxGuests
       ) {
         router.push("/404");
       } else {
@@ -75,6 +79,7 @@ const CheckoutPage = () => {
           bookingPricePerNight: Number(bookingPricePerNight),
           title,
           images,
+          maxGuests: Number(maxGuests),
         });
         setLoading(false);
       }

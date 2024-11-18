@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 import AuthContextProvider from "./providers/authProvider";
 import { BookingProvider } from "./contexts/BookingContext";
+import { Toaster } from "react-hot-toast";
 
 export const metadata: Metadata = {
   title: "Airbnb App",
@@ -17,7 +18,12 @@ export default function RootLayout({
     <html lang="en" suppressHydrationWarning>
       <body>
         <AuthContextProvider>
-          <BookingProvider>{children}</BookingProvider>
+          <BookingProvider>
+            <>
+              <Toaster />
+              {children}
+            </>
+          </BookingProvider>
         </AuthContextProvider>
       </body>
     </html>
