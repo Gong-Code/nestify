@@ -1,4 +1,4 @@
-import LandingPage from "./(root)/page";
+import LandingPage from "./(root)/_component/LandingPage";
 
 export default function IndexPage() {
   return (

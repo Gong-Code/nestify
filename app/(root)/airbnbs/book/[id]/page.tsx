@@ -12,7 +12,7 @@ const DetailsPage = async ({ params }: DetailsPageProps) => {
     return <div>Airbnb not found</div>;
   }
 
-  return <AirbnbCardDetails airbnb={airbnb} />;
+  return <AirbnbCardDetails airbnb={airbnb} maxGuests={airbnb.guests} />;
 };
 
 export default DetailsPage;

@@ -12,6 +12,7 @@ import { AccessibilityIcons } from "@/app/components/AccessibilityIcons";
 
 type AirbnbCardDetailsProps = {
   airbnb: Airbnb;
+  maxGuests: number;
 };
 
 export const AirbnbCardDetails = ({ airbnb }: AirbnbCardDetailsProps) => {
@@ -57,7 +58,6 @@ export const AirbnbCardDetails = ({ airbnb }: AirbnbCardDetailsProps) => {
         <BookingForm
           airbnbId={airbnb.airbnbId}
           pricePerNight={airbnb.pricePerNight}
-          maxGuests={airbnb.guests}
         />
       </section>
       <header className="hidden md:block">
@@ -120,7 +120,6 @@ export const AirbnbCardDetails = ({ airbnb }: AirbnbCardDetailsProps) => {
             <BookingForm
               airbnbId={airbnb.airbnbId}
               pricePerNight={airbnb.pricePerNight}
-              maxGuests={airbnb.guests}
             />
           </div>
         </section>

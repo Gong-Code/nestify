@@ -5,7 +5,6 @@ export const validateBooking = (
   checkOut: string,
   guests: number,
   maxGuests: number,
-  setError: (message: string) => void
 ): boolean => {
   if (!checkIn || !checkOut) {
     toast.error("Check-in and check-out dates are required.");

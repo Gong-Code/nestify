@@ -2,7 +2,6 @@
 
 import { useBooking } from "@/app/contexts/BookingContext";
 import { fetchAirbnbById } from "@/app/lib/airbnb.db";
-
 import { useAuth } from "@/app/providers/authProvider";
 import { Airbnb } from "@/app/types/airbnb";
 import { validateBooking } from "@/app/validation/validateBooking";
@@ -55,7 +54,7 @@ export const BookingForm = ({ airbnbId, pricePerNight }: BookingFormProps) => {
         setAirbnb(airbnbDetails);
         if (airbnbDetails) {
           setBookingPricePerNight(airbnbDetails.pricePerNight);
-          fetchAndSetMaxGuests(airbnbId);
+          fetchAndSetMaxGuests(airbnbId); // Fetch and set max guests
         }
       } catch (error) {
         console.error("Failed to fetch Airbnb details:", error);
@@ -63,7 +62,7 @@ export const BookingForm = ({ airbnbId, pricePerNight }: BookingFormProps) => {
     };
 
     fetchAirbnb();
-  }, [airbnbId]);
+  }, [airbnbId, fetchAndSetMaxGuests, setBookingPricePerNight]);
 
   const handleReserveClick = async (event: React.FormEvent) => {
     event.preventDefault();
@@ -73,12 +72,14 @@ export const BookingForm = ({ airbnbId, pricePerNight }: BookingFormProps) => {
       return;
     }
 
-    if (!validateBooking(checkIn, checkOut, guests, maxGuests, setGuestError)) {
+    if (!validateBooking(checkIn, checkOut, guests, maxGuests)) {
       return;
     }
 
     if (guests < 1 || guests > maxGuests) {
-      toast.error(`The number of guests must be between 1 and ${maxGuests}.`);
+      const errorMsg = `The number of guests must be between 1 and ${maxGuests}.`;
+      setGuestError(errorMsg);
+      toast.error(errorMsg);
       return;
     }
 
@@ -106,6 +107,7 @@ export const BookingForm = ({ airbnbId, pricePerNight }: BookingFormProps) => {
 
   return (
     <div className="border border-blue-500 p-8 rounded-lg">
+      <Toaster />
       <p className="text-lg font-semibold mb-4">
         Price: {pricePerNight} SEK / night
       </p>
@@ -152,6 +154,7 @@ export const BookingForm = ({ airbnbId, pricePerNight }: BookingFormProps) => {
                 Math.min(Number(e.target.value), maxGuests)
               );
               setGuests(value);
+              setGuestError("");
             }}
             className="border border-blue-500 p-3 rounded w-1/2"
             min="1"
@@ -176,3 +179,5 @@ export const BookingForm = ({ airbnbId, pricePerNight }: BookingFormProps) => {
     </div>
   );
 };
+
+export default BookingForm;

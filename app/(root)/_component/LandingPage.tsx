@@ -1,20 +1,20 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { Navbar } from "./_component/Navbar";
-import { Footer } from "./_component/Footer";
-import { Airbnb } from "../types/airbnb";
-import { fetchAirbnbs } from "../lib/airbnb.db";
-import { AirbnbList } from "./_component/AirbnbList";
-import { LandingPageSearch } from "../components/SearchInputs";
+import { Navbar } from "./Navbar";
+import { Footer } from "./Footer";
+import { Airbnb } from "../../types/airbnb";
+import { fetchAirbnbs } from "../../lib/airbnb.db";
+import { AirbnbList } from "./AirbnbList";
+import { LandingPageSearch } from "../../components/SearchInputs";
 import Image from "next/image";
-import { Loader } from "../helpers/Loader";
-import { filterAirbnbs } from "../lib/filterAirbnbs";
+import { Loader } from "../../helpers/Loader";
+import { filterAirbnbs } from "../../lib/filterAirbnbs";
 import { useRouter } from "next/navigation";
-import { useAuth } from "../providers/authProvider";
-import { FilterButtonIcons } from "../helpers/FilterButtonIcons";
+import { useAuth } from "../../providers/authProvider";
+import { FilterButtonIcons } from "../../helpers/FilterButtonIcons";
 import { CircleUserRound, SlidersHorizontal } from "lucide-react";
-import { FilterButton } from "../components/ui/FilterButton";
+import { FilterButton } from "../../components/ui/FilterButton";
 
 const LandingPage = () => {
   const [airbnbs, setAirbnbs] = useState<Airbnb[]>([]);

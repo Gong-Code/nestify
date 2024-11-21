@@ -10,7 +10,7 @@ import {
 } from "@stripe/react-stripe-js";
 import { bookAirbnb } from "@/app/lib/booking.db";
 import { useRouter } from "next/navigation";
-import toast, { Toaster } from "react-hot-toast";
+import toast from "react-hot-toast";
 
 type BookingDetails = {
   airbnbId: string;
